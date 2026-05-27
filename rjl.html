@@ -1,1 +1,641 @@
 
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>RJL – Respaldo Jurídico Laboral | Demo Completo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628; --navy-mid: #111E35; --navy-card: #172240; --navy-light: #1E2E50;
+  --gold: #C8A84B; --gold-light: #E5C97A; --gold-dim: #7A6030; --gold-glow: rgba(200,168,75,0.15);
+  --cream: #F2EDE0; --text-dim: #6B7F9E; --text-mid: #9BAFC8; --white: #FFFFFF;
+  --green-bg: rgba(28,122,82,0.15); --red-bg: rgba(176,48,48,0.12); --blue-bg: rgba(37,99,168,0.15); --purple-bg: rgba(107,63,160,0.15);
+  --r:12px; --r-lg:18px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:var(--navy);color:var(--cream);min-height:100vh;display:flex;flex-direction:column;font-size:14px}
+header{background:var(--navy-mid);border-bottom:1px solid rgba(200,168,75,.18);padding:13px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-seal{width:42px;height:42px;background:linear-gradient(145deg,var(--gold),var(--gold-dim));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:16px;color:var(--navy);box-shadow:0 4px 16px rgba(200,168,75,.35)}
+.logo-words h1{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:var(--white)}
+.logo-words p{font-size:9px;font-weight:500;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
+.role-pill{display:flex;align-items:center;gap:6px;background:var(--gold-glow);border:1px solid rgba(200,168,75,.25);border-radius:20px;padding:5px 11px;font-size:10.5px;font-weight:600;color:var(--gold-light);cursor:pointer}
+.role-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.role-bar{display:flex;background:var(--navy-mid);border-bottom:1px solid rgba(255,255,255,.05);overflow-x:auto}
+.role-bar::-webkit-scrollbar{display:none}
+.role-tab{flex:1;min-width:82px;padding:10px 4px;text-align:center;font-size:10.5px;font-weight:600;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;display:flex;flex-direction:column;align-items:center;gap:3px}
+.role-tab .rti{font-size:16px}
+.role-tab.active{color:var(--gold-light);border-bottom-color:var(--gold)}
+main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.view{display:none;flex:1;flex-direction:column;overflow:hidden}
+.view.active{display:flex}
+.scroll{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--navy-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--r-lg);padding:15px}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--gold-light);margin-bottom:13px;display:flex;align-items:center;gap:8px}
+.profile-hero{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.profile-photo{width:68px;height:68px;border-radius:50%;border:2px solid var(--gold);box-shadow:0 0 0 4px rgba(200,168,75,.15);background:var(--navy-light);display:flex;align-items:center;justify-content:center;font-size:28px}
+.profile-photo img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.profile-info h2{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--white)}
+.profile-info p{font-size:11.5px;color:var(--text-mid);margin-bottom:4px}
+.profile-info .asesor-chip{display:inline-flex;align-items:center;gap:5px;background:var(--gold-glow);border:1px solid rgba(200,168,75,.25);border-radius:20px;padding:3px 10px;font-size:10.5px;color:var(--gold-light)}
+.client-row{background:var(--navy-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:12px 13px;display:flex;align-items:center;gap:11px;cursor:pointer;margin-bottom:8px}
+.client-row:hover{border-color:rgba(200,168,75,.25)}
+.client-photo{width:42px;height:42px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(200,168,75,.3);background:var(--navy-light);display:flex;align-items:center;justify-content:center;font-size:18px}
+.client-photo img{width:100%;height:100%;object-fit:cover}
+.client-name{font-size:13.5px;font-weight:600;color:var(--cream)}
+.client-sub{font-size:10.5px;color:var(--text-dim)}
+.client-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
+.field label{font-size:10.5px;font-weight:600;color:var(--text-mid);text-transform:uppercase}
+.field input,.field select,.field textarea{background:var(--navy-light);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:10px 13px;font-family:'Outfit',sans-serif;font-size:13.5px;color:var(--cream);outline:none;width:100%}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dim));border:none;border-radius:var(--r);padding:12px 16px;font-weight:600;color:var(--navy);cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(200,168,75,.28)}
+.btn-gold:hover{transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid rgba(200,168,75,.35);border-radius:var(--r);padding:10px 14px;font-size:13px;font-weight:500;color:var(--gold-light);cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-outline:hover{background:var(--gold-glow)}
+.badge{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 9px;font-size:10px;font-weight:600}
+.badge-green{background:var(--green-bg);color:#4DC896}
+.badge-red{background:var(--red-bg);color:#E07070}
+.badge-gold{background:var(--gold-glow);color:var(--gold-light)}
+.badge-gray{background:rgba(255,255,255,.06);color:var(--text-mid)}
+.badge-blue{background:var(--blue-bg);color:#7ABAFF}
+.badge-purple{background:var(--purple-bg);color:#BF9FE8}
+.chat-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:13px}
+.msg{display:flex;gap:9px;animation:fadeUp .3s ease}
+.msg.user{flex-direction:row-reverse}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.msg.bot .msg-av{background:linear-gradient(135deg,var(--gold),var(--gold-dim));color:var(--navy);font-family:'Cormorant Garamond',serif}
+.msg.user .msg-av{background:var(--navy-light);color:var(--text-mid);font-size:15px}
+.msg-bubble{max-width:85%;padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.65}
+.msg.bot .msg-bubble{background:var(--navy-card);color:var(--cream);border-bottom-left-radius:3px}
+.msg.user .msg-bubble{background:var(--gold);color:var(--navy);border-bottom-right-radius:3px}
+.msg-bubble strong{color:var(--gold-light)}
+.upsell-box{margin-top:10px;background:linear-gradient(135deg,rgba(200,168,75,.12),rgba(200,168,75,.05));border:1px solid rgba(200,168,75,.3);border-radius:10px;padding:12px;font-size:12px;color:var(--gold-light)}
+.typing-dots{display:flex;gap:4px;padding:11px 14px}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.4;animation:bounce 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+.chat-bar{padding:11px 14px;background:var(--navy-mid);border-top:1px solid rgba(255,255,255,.06);display:flex;gap:9px;align-items:flex-end}
+.chat-input{flex:1;background:var(--navy-light);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 13px;font-size:13.5px;color:var(--cream);resize:none;outline:none;min-height:42px;max-height:110px}
+.send-btn{width:42px;height:42px;background:linear-gradient(135deg,var(--gold),var(--gold-dim));border:none;border-radius:11px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.pub-hero{background:linear-gradient(180deg,var(--navy-mid),var(--navy));padding:22px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.pub-hero .seal{width:56px;height:56px;background:linear-gradient(145deg,var(--gold),var(--gold-dim));border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;color:var(--navy);margin-bottom:11px}
+.pub-hero h2{font-size:21px;color:var(--white)}
+.pub-hero p{font-size:12px;color:var(--text-mid)}
+.disclaimer{display:inline-flex;align-items:center;gap:6px;background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.2);border-radius:20px;padding:5px 12px;font-size:10px;color:var(--gold);margin-top:10px}
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
+.data-chip{background:var(--navy-light);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:10px}
+.dc-label{font-size:9.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.dc-val{font-size:13px;font-weight:600;color:var(--cream)}
+.ev-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ev-btn{background:var(--navy-light);border:1.5px solid rgba(255,255,255,.07);border-radius:var(--r-lg);padding:15px 10px;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;position:relative}
+.ev-btn.has-files{border-color:rgba(200,168,75,.45);background:rgba(200,168,75,.06)}
+.ev-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px}
+.ei-green{background:var(--green-bg)}.ei-red{background:var(--red-bg)}.ei-gold{background:var(--gold-glow)}.ei-blue{background:var(--blue-bg)}.ei-purple{background:var(--purple-bg)}.ei-gray{background:rgba(255,255,255,.05)}
+.ev-label{font-size:11px;font-weight:600;color:var(--cream);text-align:center}
+.ev-sub{font-size:9.5px;color:var(--text-dim)}
+.ev-count-badge{position:absolute;top:8px;right:8px;background:var(--gold);color:var(--navy);border-radius:10px;font-size:9.5px;font-weight:700;padding:1px 7px}
+.ticket-item{background:var(--navy-light);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:11px 13px;margin-bottom:8px;display:flex;gap:10px}
+.ticket-dot{width:8px;height:8px;border-radius:50%;margin-top:5px}
+.td-new{background:var(--gold)}.td-process{background:#4DC896}.td-done{background:var(--text-dim)}
+.ticket-q{font-size:13px;color:var(--cream);margin-bottom:4px;font-weight:500}
+.ticket-meta{font-size:10px;color:var(--text-dim);display:flex;gap:10px}
+.ticket-lawyer{background:var(--navy-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:12px 13px;margin-bottom:8px;cursor:pointer}
+.tl-top{display:flex;justify-content:space-between;margin-bottom:4px}
+.tl-client{font-size:11.5px;font-weight:600;color:var(--gold-light)}
+.tl-q{font-size:13px;color:var(--cream);margin-bottom:4px}
+.tl-meta{font-size:10px;color:var(--text-dim)}
+.legal-framework{background:var(--navy-light);border:1px solid rgba(200,168,75,.2);border-radius:var(--r);padding:14px;margin-bottom:13px}
+.lf-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.lf-header span{font-size:13.5px;font-weight:600;color:var(--gold-light)}
+.lf-type{display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;margin-bottom:10px}
+.lft-base{background:rgba(37,99,168,.2);color:#7ABAFF;border:1px solid rgba(37,99,168,.3)}
+.lft-individual{background:rgba(28,122,82,.15);color:#4DC896;border:1px solid rgba(28,122,82,.3)}
+.lf-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:12.5px;line-height:1.5}
+.lf-item:last-child{border-bottom:none}
+.lf-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.lf-text strong{color:var(--gold-light)}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
+.proj-chip{background:var(--navy-light);border-radius:10px;padding:11px;border:1px solid rgba(255,255,255,.06)}
+.pc-label{font-size:9.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.pc-val{font-size:18px;font-weight:700;color:var(--gold-light);font-family:'Cormorant Garamond',serif}
+.pc-sub{font-size:9.5px;color:var(--text-dim);margin-top:2px}
+.pc-total{border-color:rgba(200,168,75,.35);background:rgba(200,168,75,.08)}
+.ai-analysis{background:var(--navy-light);border:1px solid rgba(200,168,75,.2);border-radius:var(--r);padding:14px;margin-bottom:13px;font-size:13px;line-height:1.7}
+.ai-analysis strong{color:var(--gold-light)}
+.ai-analysis .ai-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-weight:600;color:var(--gold-light);font-size:13.5px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.stat-card{background:var(--navy-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--r-lg);padding:15px;display:flex;flex-direction:column;gap:3px}
+.stat-icon{font-size:20px}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--gold-light);line-height:1}
+.stat-label{font-size:11px;color:var(--text-dim)}
+.user-row{background:var(--navy-card);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.user-photo{width:36px;height:36px;border-radius:50%;overflow:hidden;background:var(--navy-light);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.user-photo img{width:100%;height:100%;object-fit:cover}
+.up-client{border:1.5px solid rgba(37,99,168,.4)}
+.up-lawyer{border:1.5px solid rgba(200,168,75,.4)}
+.user-name{font-size:13px;font-weight:600;color:var(--cream)}
+.user-sub{font-size:10.5px;color:var(--text-dim)}
+.user-actions{display:flex;gap:6px;margin-left:auto}
+.icon-btn{width:29px;height:29px;border-radius:7px;border:1px solid rgba(255,255,255,.08);background:var(--navy-light);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-mid)}
+.icon-btn:hover{border-color:rgba(200,168,75,.3);color:var(--gold-light)}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid rgba(255,255,255,.05)}
+.divider{height:1px;background:rgba(255,255,255,.05);margin:10px 0}
+.salary-log-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.salary-log-item:last-child{border-bottom:none}
+.sl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.sl-dot-current{background:var(--gold);box-shadow:0 0 8px rgba(200,168,75,.5)}
+.sl-dot-old{background:var(--text-dim)}
+.sl-content{flex:1}
+.sl-salary{font-size:16px;font-weight:700;color:var(--gold-light);font-family:'Cormorant Garamond',serif}
+.sl-date{font-size:10.5px;color:var(--text-dim);margin-bottom:3px}
+.sl-note{font-size:11.5px;color:var(--text-mid);line-height:1.4}
+.sl-badge{display:inline-flex;align-items:center;gap:4px;background:var(--green-bg);color:#4DC896;border-radius:10px;padding:2px 8px;font-size:9.5px;font-weight:600}
+.sl-diff{font-size:11px;color:#4DC896;font-weight:600}
+.jornada-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.jornada-row:last-child{border-bottom:none}
+.jr-date{font-size:10px;color:var(--text-dim);width:58px;flex-shrink:0}
+.jr-bar-wrap{flex:1;height:18px;background:var(--navy-light);border-radius:5px;position:relative;overflow:hidden}
+.jr-bar-declared{position:absolute;top:0;left:0;height:100%;background:rgba(200,168,75,.18);border-radius:5px}
+.jr-bar-real{position:absolute;top:0;left:0;height:100%;border-radius:5px}
+.jr-bar-normal{background:rgba(200,168,75,.55)}
+.jr-bar-over{background:rgba(176,48,48,.65)}
+.jr-extra{font-size:10px;font-weight:700;width:42px;text-align:right;flex-shrink:0}
+.jr-extra.ot{color:#E07070}.jr-extra.ok{color:var(--text-dim)}
+.jr-flag{font-size:11px;flex-shrink:0;width:16px;text-align:center}
+.jornada-legend{display:flex;gap:14px;margin-bottom:10px}
+.jl-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)}
+.jl-box{width:11px;height:11px;border-radius:3px}
+.commission-card{background:linear-gradient(135deg,rgba(200,168,75,.08),rgba(200,168,75,.02));border:1px solid rgba(200,168,75,.25);border-radius:var(--r-lg);padding:14px;margin-top:12px}
+.commission-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.commission-row:last-child{border-bottom:none}
+.commission-label{font-size:12px;color:var(--text-mid)}
+.commission-value{font-size:16px;font-weight:700;color:var(--gold-light);font-family:'Cormorant Garamond',serif}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;align-items:flex-end;backdrop-filter:blur(5px)}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:var(--navy-mid);border-radius:20px 20px 0 0;padding:17px 15px 30px;width:100%;border-top:1px solid rgba(200,168,75,.18);animation:slideUp .3s ease;max-height:85vh;overflow-y:auto}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:36px;height:4px;background:rgba(255,255,255,.12);margin:0 auto 15px}
+.modal-sheet h3{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--white);margin-bottom:4px}
+.modal-sheet p{font-size:12px;color:var(--text-dim);margin-bottom:17px}
+.modal-opts{display:flex;flex-direction:column;gap:9px}
+.modal-opt{background:var(--navy-light);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:12px 14px;display:flex;align-items:center;gap:11px;cursor:pointer;font-size:13.5px;color:var(--cream)}
+.modal-opt:hover{border-color:rgba(200,168,75,.3)}
+.modal-opt-icon{font-size:18px;width:24px;text-align:center}
+.modal-cancel{margin-top:9px;background:none;border:none;color:var(--text-dim);font-size:13px;padding:10px;cursor:pointer;width:100%}
+.toast{position:fixed;bottom:75px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--navy-card);border:1px solid rgba(200,168,75,.3);border-radius:20px;padding:8px 18px;font-size:12px;color:var(--gold-light);opacity:0;transition:all .3s;z-index:600;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(200,168,75,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-seal">RJL</div>
+    <div class="logo-words">
+      <h1>Respaldo Jurídico Laboral</h1>
+      <p>Certeza Jurídica en la Palma de su Mano</p>
+    </div>
+  </div>
+  <div class="role-pill" onclick="cycleRole()">
+    <div class="role-dot"></div>
+    <span id="roleName">Sin sesión</span>
+  </div>
+</header>
+
+<div class="role-bar">
+  <div class="role-tab active" onclick="switchView(0)"><span class="rti">🌐</span>Público</div>
+  <div class="role-tab" onclick="switchView(1)"><span class="rti">👤</span>Cliente</div>
+  <div class="role-tab" onclick="switchView(2)"><span class="rti">⚖️</span>Asesor</div>
+  <div class="role-tab" onclick="switchView(3)"><span class="rti">🔧</span>Admin</div>
+</div>
+
+<main>
+
+<!-- ==================== VISTA 0: PÚBLICO ==================== -->
+<div class="view active" id="view0">
+  <div class="pub-hero">
+    <div class="seal">RJL</div>
+    <h2>¿Tu patrón te debe algo?</h2>
+    <p>Consulta tus derechos laborales sin costo.<br>Sin registro, sin complicaciones.</p>
+    <div class="disclaimer">⚠️ Orientación informativa — no sustituye asesoría legal formal</div>
+  </div>
+  <div class="chat-wrap">
+    <div class="chat-msgs" id="pubChat">
+      <div class="msg bot">
+        <div class="msg-av">RJL</div>
+        <div class="msg-bubble">Hola, soy el asesor virtual de <strong>Respaldo Jurídico Laboral</strong>. Especialista en derecho laboral mexicano.<br><br>Cuéntame tu situación: horas extra, liquidación, IMSS, vacaciones… pregunta lo que necesites.</div>
+      </div>
+    </div>
+    <div class="chat-bar">
+      <textarea class="chat-input" id="pubInput" placeholder="Escribe tu pregunta aquí…" rows="1" onkeydown="handleKey(event,'pub')" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" onclick="sendMsg('pub')">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== VISTA 1: CLIENTE (COMPLETA) ==================== -->
+<div class="view" id="view1">
+  <div class="scroll">
+    <!-- Tarjeta de perfil + datos laborales COMPLETOS (8 campos) -->
+    <div class="card">
+      <div class="profile-hero">
+        <div class="profile-photo">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="María González" onerror="this.parentElement.textContent='👩'">
+        </div>
+        <div class="profile-info">
+          <h2>María González</h2>
+          <p>Cliente activa · 1 año 3 meses de antigüedad</p>
+          <div class="asesor-chip">⚖️ Lic. Carlos Mendoza</div>
+        </div>
+      </div>
+      <div class="card-title">📋 Mis Datos Laborales</div>
+      <div class="data-grid">
+        <div class="data-chip"><div class="dc-label">Fecha de Ingreso</div><div class="dc-val">12/Ene/2024</div></div>
+        <div class="data-chip"><div class="dc-label">Antigüedad</div><div class="dc-val">1 año 3 meses</div></div>
+        <div class="data-chip"><div class="dc-label">Salario Diario ACTUAL</div><div class="dc-val" style="color:var(--gold-light)">$380 MXN</div></div>
+        <div class="data-chip"><div class="dc-label">Días Laborales</div><div class="dc-val">Lun – Sáb</div></div>
+        <div class="data-chip"><div class="dc-label">Horario (papel)</div><div class="dc-val">9am – 6pm</div></div>
+        <div class="data-chip"><div class="dc-label">IMSS</div><div class="dc-val" style="color:#E07070">No tiene</div></div>
+        <div class="data-chip"><div class="dc-label">Domicilio</div><div class="dc-val">Col. Guerrero</div></div>
+        <div class="data-chip"><div class="dc-label">Contrato</div><div class="dc-val" style="color:#E07070">Sin contrato</div></div>
+      </div>
+      <button class="btn-outline" onclick="toast('Módulo de edición de datos')">✏️ Actualizar mis datos</button>
+    </div>
+
+    <!-- Bóveda de Evidencias -->
+    <div class="card">
+      <div class="card-title">📁 Bóveda de Evidencias</div>
+      <div class="ev-grid">
+        <div class="ev-btn has-files" onclick="openEvModal()"><div class="ev-icon ei-green">📸</div><div class="ev-label">Entrada al Trabajo</div><div class="ev-sub">Foto + GPS + hora</div><div class="ev-count-badge">14</div></div>
+        <div class="ev-btn has-files" onclick="openEvModal()"><div class="ev-icon ei-red">🚪</div><div class="ev-label">Salida del Trabajo</div><div class="ev-sub">Horas extra comprobadas</div><div class="ev-count-badge">14</div></div>
+        <div class="ev-btn" onclick="openEvModal()"><div class="ev-icon ei-gold">📄</div><div class="ev-label">Contrato de Trabajo</div><div class="ev-sub">Si tienes uno firmado</div></div>
+        <div class="ev-btn has-files" onclick="openEvModal()"><div class="ev-icon ei-blue">💳</div><div class="ev-label">Recibo o Transferencia</div><div class="ev-sub">Salario recibido</div><div class="ev-count-badge">6</div></div>
+        <div class="ev-btn has-files" onclick="openEvModal()"><div class="ev-icon ei-purple">🏥</div><div class="ev-label">Gastos Médicos</div><div class="ev-sub">Sin IMSS, tú pagas</div><div class="ev-count-badge">3</div></div>
+        <div class="ev-btn" onclick="openEvModal()"><div class="ev-icon ei-gray">🏠</div><div class="ev-label">Cambio de Domicilio</div><div class="ev-sub">Riesgo en trayecto</div></div>
+        <div class="ev-btn" onclick="openEvModal()"><div class="ev-icon ei-gray">📎</div><div class="ev-label">Otro Comprobante</div><div class="ev-sub">Cualquier evidencia extra</div></div>
+      </div>
+    </div>
+
+    <!-- Tickets del cliente -->
+    <div class="card">
+      <div class="card-title">💬 Mis Consultas al Asesor</div>
+      <div class="ticket-item"><div class="ticket-dot td-process"></div><div><div class="ticket-q">¿Me corresponde prima dominical si trabajo domingos?</div><div class="ticket-meta"><span>Hace 2 días</span><span class="badge badge-green">En proceso</span></div></div></div>
+      <div class="ticket-item"><div class="ticket-dot td-new"></div><div><div class="ticket-q">Me cambiaron el horario sin avisar, ¿qué hago?</div><div class="ticket-meta"><span>Hoy 10:34am</span><span class="badge badge-gold">Sin leer</span></div></div></div>
+      <div class="ticket-item"><div class="ticket-dot td-done"></div><div><div class="ticket-q">¿Cuánto tiempo tiene el patrón para liquidarme?</div><div class="ticket-meta"><span>Hace 1 semana</span><span class="badge badge-gray">Atendido</span></div></div></div>
+      <button class="btn-outline" style="margin-top:4px" onclick="toast('Nueva consulta enviada al asesor')">➕ Nueva consulta al asesor</button>
+    </div>
+
+    <!-- Bitácora de Salarios -->
+    <div class="card">
+      <div class="card-title">💰 Bitácora de Salarios</div>
+      <p style="font-size:11.5px;color:var(--text-dim);margin-bottom:14px;line-height:1.5">Historial de cambios de salario. El más reciente se usa en el cálculo de liquidación.</p>
+      <div class="salary-log-item"><div class="sl-dot sl-dot-current"></div><div class="sl-content"><div class="sl-date">Actual · desde 01/Mar/2025</div><div class="sl-salary">$380 MXN / día</div><div class="sl-note">Me subieron el sueldo verbalmente. Captura WhatsApp adjunta.</div><div style="display:flex;gap:6px;margin-top:4px"><span class="sl-badge">📱 Captura WhatsApp adjunta</span><span class="sl-diff">↑ +$60 vs anterior</span></div></div></div>
+      <div class="salary-log-item"><div class="sl-dot sl-dot-old"></div><div class="sl-content"><div class="sl-date">01/Sep/2024 – 28/Feb/2025</div><div class="sl-salary" style="color:var(--text-mid)">$320 MXN / día</div><div class="sl-note">Salario inicial acordado verbalmente. 6 recibos de transferencia disponibles.</div><div style="margin-top:4px"><span class="sl-badge" style="background:rgba(255,255,255,.06);color:var(--text-dim)">📄 6 recibos subidos</span></div></div></div>
+      <div class="salary-log-item"><div class="sl-dot sl-dot-old"></div><div class="sl-content"><div class="sl-date">12/Ene/2024 – 31/Ago/2024</div><div class="sl-salary" style="color:var(--text-dim)">$280 MXN / día</div><div class="sl-note">Salario de contratación. Solo efectivo, sin recibos.</div><div style="margin-top:4px"><span class="sl-badge" style="background:rgba(176,48,48,.1);color:#E07070">⚠️ Sin comprobante</span></div></div></div>
+      <button class="btn-outline" style="margin-top:6px" onclick="toast('Nuevo cambio salarial registrado')">➕ Registrar cambio de salario</button>
+    </div>
+
+    <!-- Línea de Tiempo de Jornada -->
+    <div class="card">
+      <div class="card-title">⏱️ Línea de Tiempo — Jornada Real</div>
+      <p style="font-size:11.5px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">Comparativo entre tu horario en papel (9am–6pm) y tu jornada real registrada con fotos. Las barras rojas son horas extra.</p>
+      <div class="jornada-legend"><div class="jl-item"><div class="jl-box" style="background:rgba(200,168,75,.35)"></div>Jornada declarada</div><div class="jl-item"><div class="jl-box" style="background:rgba(176,48,48,.6)"></div>Horas extra</div></div>
+      <div class="jornada-row"><div class="jr-date">Lun 17 Mar</div><div class="jr-bar-wrap"><div class="jr-bar-declared" style="width:75%"></div><div class="jr-bar-real jr-bar-normal" style="width:75%"></div></div><div class="jr-extra ok">0h extra</div><div class="jr-flag">✅</div></div>
+      <div class="jornada-row"><div class="jr-date">Mar 18 Mar</div><div class="jr-bar-wrap"><div class="jr-bar-declared" style="width:75%"></div><div class="jr-bar-real jr-bar-over" style="width:92%"></div></div><div class="jr-extra ot">+2h</div><div class="jr-flag">🔴</div></div>
+      <div class="jornada-row"><div class="jr-date">Mié 19 Mar</div><div class="jr-bar-wrap"><div class="jr-bar-declared" style="width:75%"></div><div class="jr-bar-real jr-bar-over" style="width:100%"></div></div><div class="jr-extra ot">+3h</div><div class="jr-flag">🔴</div></div>
+      <div class="jornada-row"><div class="jr-date">Jue 20 Mar</div><div class="jr-bar-wrap"><div class="jr-bar-declared" style="width:75%"></div><div class="jr-bar-real jr-bar-normal" style="width:78%"></div></div><div class="jr-extra ok">+30m</div><div class="jr-flag">✅</div></div>
+      <div class="jornada-row"><div class="jr-date">Vie 21 Mar</div><div class="jr-bar-wrap"><div class="jr-bar-declared" style="width:75%"></div><div class="jr-bar-real jr-bar-over" style="width:95%"></div></div><div class="jr-extra ot">+2.5h</div><div class="jr-flag">🔴</div></div>
+      <div class="jornada-row"><div class="jr-date">Sáb 22 Mar</div><div class="jr-bar-wrap"><div class="jr-bar-declared" style="width:75%"></div><div class="jr-bar-real jr-bar-over" style="width:88%"></div></div><div class="jr-extra ot">+1.5h</div><div class="jr-flag">🔴</div></div>
+      <div style="margin-top:12px;background:var(--navy-light);border-radius:10px;padding:11px;display:flex;justify-content:space-between;align-items:center"><div style="font-size:11.5px;color:var(--text-mid)">Total horas extra esta semana</div><div style="font-size:18px;font-weight:700;color:#E07070;font-family:'Cormorant Garamond',serif">9.5 horas</div></div>
+    </div>
+
+    <!-- Marco Legal Aplicable (Cliente) -->
+    <div class="card">
+      <div class="card-title">📚 Marco Legal Aplicable — Tu Caso</div>
+      <div class="legal-framework"><div class="lf-header"><span>Régimen aplicable al caso:</span></div><div class="lft-base lf-type">📋 Ley Federal del Trabajo (base)</div>
+      <p style="font-size:11.5px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">No se ha subido contrato. El caso se rige íntegramente por la LFT. Si existiera contrato con cláusulas superiores, se aplicarían en su favor.</p>
+      <div class="lf-item"><span class="lf-icon">✅</span><div class="lf-text"><strong>Art. 84 LFT — Salario integrado:</strong> las horas extra forman parte del salario base para el cálculo de liquidación.</div></div>
+      <div class="lf-item"><span class="lf-icon">✅</span><div class="lf-text"><strong>Art. 123 CPEUM / Art. 50 LFT — Despido injustificado:</strong> 3 meses de salario + 20 días por año trabajado + partes proporcionales.</div></div>
+      <div class="lf-item"><span class="lf-icon">✅</span><div class="lf-text"><strong>Art. 76 LFT — Vacaciones:</strong> 12 días mínimo al primer año. No disfrutadas = pago proporcional obligatorio.</div></div>
+      <div class="lf-item"><span class="lf-icon">⚠️</span><div class="lf-text"><strong>Art. 5o LSS — IMSS:</strong> la falta de inscripción genera responsabilidad patronal. El trabajador puede reclamar cuotas y gastos médicos erogados.</div></div>
+      <div class="lf-item"><span class="lf-icon">ℹ️</span><div class="lf-text"><strong>Sin contrato escrito:</strong> la LFT presume la relación laboral y la antigüedad alegada por el trabajador. La carga de prueba es del patrón.</div></div></div>
+      <button class="btn-outline" onclick="toast('📋 Análisis legal: Tu caso está protegido por la LFT. Hay jurisprudencia favorable para trabajadores sin contrato.')">🤖 Analizar mi caso con IA</button>
+    </div>
+
+    <!-- Chat -->
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:15px 15px 0"><div class="card-title">🤖 Asesor Virtual — Chat</div></div>
+      <div class="chat-msgs" id="clientChat" style="max-height:280px">
+        <div class="msg bot"><div class="msg-av">RJL</div><div class="msg-bubble">Hola <strong>María</strong>. Estoy aquí para ayudarte. Tu salario actual es $380/día y tienes 34 evidencias documentadas. ¿En qué te ayudo?</div></div>
+      </div>
+      <div class="chat-bar">
+        <textarea class="chat-input" id="clientInput" placeholder="Pregunta sobre tus derechos…" rows="1" onkeydown="handleKey(event,'client')" oninput="autoResize(this)"></textarea>
+        <button class="send-btn" onclick="sendMsg('client')">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== VISTA 2: ASESOR ==================== -->
+<div class="view" id="view2">
+  <div class="scroll">
+    <div class="card"><div class="card-title">📬 Bandeja de Tickets</div>
+    <div class="ticket-lawyer"><div class="tl-top"><span class="tl-client">María G.</span><span class="badge badge-gold">Sin leer</span></div><div class="tl-q">Me cambiaron el horario sin avisar, ¿qué hago?</div><div class="tl-meta">Hoy 10:34am · 1 año 3 meses · Sin IMSS</div></div>
+    <div class="ticket-lawyer"><div class="tl-top"><span class="tl-client">Jorge R.</span><span class="badge badge-green">En proceso</span></div><div class="tl-q">¿Me corresponde prima dominical si trabajo domingos?</div><div class="tl-meta">Hace 2 días · 8 meses de antigüedad</div></div>
+    <div class="ticket-lawyer"><div class="tl-top"><span class="tl-client">Ana P.</span><span class="badge badge-gray">Atendido</span></div><div class="tl-q">¿Cuánto tiempo tiene el patrón para liquidarme?</div><div class="tl-meta">Hace 1 semana · 2 años 1 mes</div></div></div>
+
+    <div class="card"><div class="card-title">👥 Mis Clientes</div>
+    <div class="client-row" onclick="scrollToExpediente()"><div class="client-photo"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="MG" onerror="this.parentElement.textContent='👩'"></div><div style="flex:1"><div class="client-name">María González</div><div class="client-sub">1 año 3 meses · Sin IMSS · 34 evidencias · Salario $380</div></div><div class="client-right"><span class="badge badge-red">Alta prioridad</span><span style="font-size:9.5px;color:var(--text-dim)">Ver expediente →</span></div></div>
+    <div class="client-row"><div class="client-photo"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="JR" onerror="this.parentElement.textContent='👨'"></div><div style="flex:1"><div class="client-name">Jorge Ramírez</div><div class="client-sub">8 meses · Sin contrato · 12 evidencias</div></div><div class="client-right"><span class="badge badge-gold">Media</span></div></div>
+    <div class="client-row"><div class="client-photo"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="AP" onerror="this.parentElement.textContent='👩'"></div><div style="flex:1"><div class="client-name">Ana Pérez</div><div class="client-sub">2 años 1 mes · Con IMSS · 21 evidencias</div></div><div class="client-right"><span class="badge badge-green">Normal</span></div></div></div>
+
+    <div class="card" id="legalCard"><div class="card-title">📚 Marco Legal Aplicable — María González</div>
+    <div class="legal-framework"><div class="lf-header"><span>Régimen aplicable al caso:</span></div><div class="lft-base lf-type">📋 Ley Federal del Trabajo (base)</div>
+    <p style="font-size:11.5px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">No se ha subido contrato. El caso se rige íntegramente por la LFT.</p>
+    <div class="lf-item"><span class="lf-icon">✅</span><div class="lf-text"><strong>Art. 84 LFT — Salario integrado:</strong> las horas extra forman parte del salario base.</div></div>
+    <div class="lf-item"><span class="lf-icon">✅</span><div class="lf-text"><strong>Art. 50 LFT — Despido injustificado:</strong> 3 meses + 20 días por año.</div></div>
+    <div class="lf-item"><span class="lf-icon">⚠️</span><div class="lf-text"><strong>Art. 5° LSS — IMSS:</strong> falta de inscripción genera responsabilidad patronal.</div></div>
+    <div class="lf-item"><span class="lf-icon">ℹ️</span><div class="lf-text"><strong>Sin contrato escrito:</strong> la LFT presume la relación laboral. Carga de prueba es del patrón.</div></div></div>
+    <button class="btn-outline" onclick="analyzeLegalMock()">🤖 Analizar marco legal con IA</button>
+    <div id="legalAiBox" style="display:none;margin-top:12px" class="ai-analysis"><div class="ai-header">🤖 Análisis Legal Expandido</div><div id="legalAiText"></div></div></div>
+
+    <div class="card" id="projCard"><div class="card-title">📊 Proyección Financiera — María González</div>
+    <p style="font-size:11px;color:var(--text-dim);margin-bottom:12px">Salario actual: $380/día · 1 año 3 meses · Sin IMSS · 14 registros entrada/salida</p>
+    <div class="proj-grid"><div class="proj-chip"><div class="pc-label">Indemnización 90 días</div><div class="pc-val">$34,200</div><div class="pc-sub">Art. 50 LFT</div></div>
+    <div class="proj-chip"><div class="pc-label">20 días × año</div><div class="pc-val">$9,500</div><div class="pc-sub">1.25 años</div></div>
+    <div class="proj-chip"><div class="pc-label">Vacaciones proporcionales</div><div class="pc-val">$2,280</div><div class="pc-sub">No disfrutadas</div></div>
+    <div class="proj-chip"><div class="pc-label">Horas Extra est.</div><div class="pc-val">$8,640</div><div class="pc-sub">14 registros × 2h</div></div>
+    <div class="proj-chip"><div class="pc-label">Gastos Médicos (IMSS)</div><div class="pc-val">$2,450</div><div class="pc-sub">3 tickets subidos</div></div>
+    <div class="proj-chip pc-total"><div class="pc-label">Total estimado</div><div class="pc-val" style="font-size:21px">$57,070</div><div class="pc-sub">Rango negociación</div></div></div>
+
+    <!-- Comisión del abogado (30%) -->
+    <div class="commission-card"><div class="commission-row"><span class="commission-label">💰 Cliente (María) recibe:</span><span class="commission-value">$57,070</span></div>
+    <div class="commission-row"><span class="commission-label">⚖️ Honorario del abogado (15%):</span><span class="commission-value">$8,560</span></div>
+    <div class="commission-row"><span class="commission-label">🏛️ Comisión RJL (30% del honorario):</span><span class="commission-value">$2,568</span></div>
+    <div class="commission-row"><span class="commission-label">👨‍⚖️ El abogado recibe:</span><span class="commission-value commission-total" style="color:var(--gold);font-size:18px">$5,992</span></div></div>
+
+    <div class="ai-analysis" id="lawyerAnalysis"><div class="ai-header">🤖 Estrategia del Caso — IA</div><div id="lawyerAnalysisText" style="color:var(--text-dim);font-size:12px">Presiona "Analizar con IA" para generar la estrategia de negociación basada en el expediente.</div></div>
+    <div style="display:flex;gap:9px"><button class="btn-outline" style="flex:1" onclick="analyzeCaseMock()">🤖 Analizar con IA</button><button class="btn-gold" style="flex:1" onclick="toast('Expediente PDF generado')">📄 Generar PDF</button></div></div>
+  </div>
+</div>
+
+<!-- ==================== VISTA 3: ADMIN ==================== -->
+<div class="view" id="view3">
+  <div class="scroll">
+    <div class="card"><div class="card-title">📈 Panel General</div>
+    <div class="stat-grid"><div class="stat-card"><div class="stat-icon">👤</div><div class="stat-val">38</div><div class="stat-label">Clientes activos</div></div>
+    <div class="stat-card"><div class="stat-icon">⚖️</div><div class="stat-val">4</div><div class="stat-label">Asesores</div></div>
+    <div class="stat-card"><div class="stat-icon">📬</div><div class="stat-val">12</div><div class="stat-label">Tickets abiertos</div></div>
+    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-val">$7,600</div><div class="stat-label">Suscripciones/mes</div></div></div>
+    <div class="stat-grid" style="margin-top:9px"><div class="stat-card"><div class="stat-icon">🏛️</div><div class="stat-val">$8,560</div><div class="stat-label">Comisiones (este mes)</div></div>
+    <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val">$16,160</div><div class="stat-label">Total MRR</div></div></div></div>
+
+    <div class="card"><div class="card-title">🔧 Gestión de Usuarios</div>
+    <button class="btn-gold" style="margin-bottom:13px" onclick="toast('Formulario de nuevo usuario')">➕ Nuevo usuario</button>
+    <div class="sec-title">Asesores</div>
+    <div class="user-row"><div class="user-photo up-lawyer" style="color:var(--gold-light)">LC</div><div style="flex:1"><div class="user-name">Lic. Carlos Mendoza</div><div class="user-sub">12 clientes asignados</div></div><div class="user-actions"><div class="icon-btn" onclick="toast('Editar usuario')">✏️</div><div class="icon-btn danger" onclick="toast('Usuario desactivado')">🗑️</div></div></div>
+    <div class="user-row"><div class="user-photo up-lawyer" style="color:var(--gold-light)">LR</div><div style="flex:1"><div class="user-name">Lic. Rosa Herrera</div><div class="user-sub">8 clientes asignados</div></div><div class="user-actions"><div class="icon-btn" onclick="toast('Editar usuario')">✏️</div><div class="icon-btn danger" onclick="toast('Usuario desactivado')">🗑️</div></div></div>
+    <div class="divider"></div>
+    <div class="sec-title">Clientes</div>
+    <div class="user-row"><div class="user-photo up-client"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="MG" style="width:100%;height:100%;object-fit:cover"></div><div style="flex:1"><div class="user-name">María González</div><div class="user-sub">Cliente · <span style="color:var(--gold)">Asesor: C. Mendoza</span> · Activo</div></div><div class="user-actions"><div class="icon-btn" onclick="toast('Reasignar asesor')">🔄</div><div class="icon-btn danger" onclick="toast('Usuario eliminado')">🗑️</div></div></div>
+    <div class="user-row"><div class="user-photo up-client"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="JR" style="width:100%;height:100%;object-fit:cover"></div><div style="flex:1"><div class="user-name">Jorge Ramírez</div><div class="user-sub">Cliente · <span style="color:var(--gold)">Asesor: R. Herrera</span> · Activo</div></div><div class="user-actions"><div class="icon-btn" onclick="toast('Reasignar asesor')">🔄</div><div class="icon-btn danger" onclick="toast('Usuario eliminado')">🗑️</div></div></div>
+    <div class="user-row"><div class="user-photo up-client"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="AP" style="width:100%;height:100%;object-fit:cover"></div><div style="flex:1"><div class="user-name">Ana Pérez</div><div class="user-sub">Cliente · <span style="color:var(--gold)">Asesor: C. Mendoza</span> · Activo</div></div><div class="user-actions"><div class="icon-btn" onclick="toast('Reasignar asesor')">🔄</div><div class="icon-btn danger" onclick="toast('Usuario eliminado')">🗑️</div></div></div></div>
+
+    <div class="card"><div class="card-title">🚀 Demostración: Efecto Red</div>
+    <div class="commission-card" style="background:var(--navy-light)"><div class="commission-row"><span>📊 Cada caso ganado genera referidos:</span><span class="commission-value">5-10 nuevos clientes</span></div>
+    <div class="commission-row"><span>🎯 Con 5 casos ganados:</span><span class="commission-value">+25 a 50 clientes</span></div>
+    <div class="commission-row"><span>🚀 Objetivo 500 clientes</span><span class="commission-value">→ Rentabilidad asegurada</span></div></div>
+    <button class="btn-gold" style="margin-top:12px" onclick="toast('🔗 Link de suscripción copiado: rjl.mx/suscribirse')">💳 Suscribirse por $200/mes</button></div>
+  </div>
+</div>
+
+</main>
+
+<!-- Modal de Evidencias -->
+<div class="modal-overlay" id="evModal"><div class="modal-sheet"><div class="modal-handle"></div><h3>Cargar evidencia</h3><p>Elige cómo quieres subir tu comprobante</p><div class="modal-opts"><div class="modal-opt" onclick="fakeUpload()"><span class="modal-opt-icon">📷</span>Tomar foto ahora (GPS automático)</div><div class="modal-opt" onclick="fakeUpload()"><span class="modal-opt-icon">🖼️</span>Elegir de galería</div><div class="modal-opt" onclick="fakeUpload()"><span class="modal-opt-icon">📁</span>Subir archivo / PDF</div></div><button class="modal-cancel" onclick="closeEvModal()">Cancelar</button></div></div>
+
+<div class="toast" id="toastEl"></div>
+
+<script>
+// ==================== CONFIGURACIÓN DEMO ====================
+const DEMO_MODE = true;
+
+// ==================== ESTADO GLOBAL ====================
+let currentRole = 0;
+const roles = ['Sin sesión', 'Cliente', 'Asesor Jurídico', 'Administrador'];
+
+function cycleRole() {
+  currentRole = (currentRole + 1) % roles.length;
+  document.getElementById('roleName').textContent = roles[currentRole];
+  toast('Vista: ' + roles[currentRole]);
+}
+
+function switchView(n) {
+  document.querySelectorAll('.view').forEach((v, i) => v.classList.toggle('active', i === n));
+  document.querySelectorAll('.role-tab').forEach((t, i) => t.classList.toggle('active', i === n));
+}
+
+const chatState = {
+  pub: { typing: false, count: 0, limit: 3 },
+  client: { typing: false, count: 0, limit: 999 }
+};
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+}
+
+function handleKey(e, chat) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMsg(chat);
+  }
+}
+
+function addMsg(chatId, role, html) {
+  const c = document.getElementById(chatId === 'pub' ? 'pubChat' : 'clientChat');
+  const d = document.createElement('div');
+  d.className = 'msg ' + role;
+  const av = role === 'bot' ? '<div class="msg-av">RJL</div>' : '<div class="msg-av">👤</div>';
+  d.innerHTML = av + '<div class="msg-bubble">' + html + '</div>';
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+function showTyping(chatId) {
+  const c = document.getElementById(chatId === 'pub' ? 'pubChat' : 'clientChat');
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  d.id = chatId + 'Typing';
+  d.innerHTML = '<div class="msg-av">RJL</div><div class="msg-bubble"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+function removeTyping(chatId) {
+  const t = document.getElementById(chatId + 'Typing');
+  if (t) t.remove();
+}
+
+function fmt(text) {
+  return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+}
+
+// ==================== MOCK INTELIGENTE ====================
+function getMockResponse(question, userType) {
+  const q = question.toLowerCase();
+  
+  if (userType === 'client') {
+    if (q.includes('liquidacion') || q.includes('finiquito') || q.includes('cuánto me toca') || q.includes('cuanto me toca')) {
+      return `María, según tu expediente con **1 año 3 meses** y salario actual de **$380/día**, tu liquidación estimada por despido injustificado es de **$57,070 MXN**.\n\n📊 Desglose:\n• 3 meses = $34,200\n• 20 días por año = $9,500\n• Vacaciones = $2,280\n• Horas extra = $8,640\n• Gastos médicos = $2,450\n\n¿Quieres que simulemos cuánto subiría si documentas 2 meses más de horas extra?`;
+    }
+    if (q.includes('hora extra') || q.includes('horas extra')) {
+      return `Con tus **14 registros de salida** esta semana, tienes **9.5 horas extra**. Según el Art. 68 LFT, se pagan al 100% duplicadas.\n\n💰 Solo esta semana te corresponderían **$1,140 MXN** adicionales. ¿Subiste las fotos con GPS? Así las puedo validar.`;
+    }
+    if (q.includes('imss') || q.includes('doctor') || q.includes('gastos medicos')) {
+      return `Tienes **3 tickets médicos** subidos por $2,450. Como no estás dada de alta en el IMSS (Art. 5° LSS), el patrón debe reembolsarte **TODOS** tus gastos médicos, más una indemnización adicional.\n\n📌 He marcado este punto como "Alta prioridad" en tu expediente.`;
+    }
+    if (q.includes('contrato')) {
+      return `Actualmente no tienes contrato escrito. La **LFT presume la relación laboral** y tu antigüedad (Art. 784). Esto juega a tu favor porque el patrón tiene la carga de probar lo contrario.\n\n¿Quieres que genere un escrito para solicitar tu contrato formal?`;
+    }
+    return `Gracias por tu mensaje, María. Revisando tu expediente:\n\n✅ Tienes **34 evidencias** documentadas\n✅ Salario actual $380/día\n✅ 1 año 3 meses de antigüedad\n\n¿Necesitas ayuda con liquidación, horas extra, o el proceso de conciliación?`;
+  }
+  
+  // Respuestas para público
+  if (q.includes('liquidacion') || q.includes('cuanto me toca')) {
+    return `En México, por **despido injustificado** te corresponde:\n\n• **3 meses de salario** (indemnización constitucional)\n• **20 días por año trabajado** (prima de antigüedad)\n• Partes proporcionales de aguinaldo, vacaciones y prima vacacional\n\n📌 Con RJL puedes documentar TODAS tus evidencias con GPS y timestamp. La suscripción cuesta **$200/mes** y te da acceso ilimitado a asesoría especializada.\n\n¿Quieres que calcule un estimado para tu caso específico?`;
+  }
+  if (q.includes('hora extra') || q.includes('horas extra')) {
+    return `Las **horas extra** en México se pagan al **100% duplicadas** (Art. 68 LFT). Si trabajas después de tu jornada, cada hora extra vale el doble que una hora normal.\n\n⚠️ El problema es probarlas. Con RJL puedes tomar fotos con **GPS y timestamp** al entrar y salir, creando evidencia irrefutable.\n\n¿Te gustaría saber cómo documentar tus horas extra?`;
+  }
+  return `Gracias por tu consulta. En **Respaldo Jurídico Laboral** ayudamos a trabajadores mexicanos a documentar evidencias con GPS y timestamp para proteger sus derechos.\n\n💰 Suscripción: **$200/mes**\n✅ Asesoría ilimitada con IA\n✅ Bóveda de evidencias con GPS\n✅ Proyección exacta de liquidación\n\n¿Te gustaría saber más o prefieres que responda tu pregunta específica?`;
+}
+
+// ==================== sendMsg con MODO DEMO ====================
+async function sendMsg(chatId) {
+  const state = chatState[chatId];
+  if (state.typing) return;
+  
+  const inp = document.getElementById(chatId === 'pub' ? 'pubInput' : 'clientInput');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  
+  addMsg(chatId, 'user', txt);
+  inp.value = '';
+  inp.style.height = 'auto';
+  state.count++;
+  state.typing = true;
+  showTyping(chatId);
+
+  // Límite para público
+  if (chatId === 'pub' && state.count > state.limit) {
+    await new Promise(r => setTimeout(r, 700));
+    removeTyping(chatId);
+    addMsg(chatId, 'bot', `Has alcanzado el límite de consultas gratuitas.<br><br>
+      <div class="upsell-box"><strong>🔐 Accede sin límites con RJL</strong><br>
+      ✅ Asesoría ilimitada con IA especializada<br>
+      ✅ Bóveda de evidencias con GPS y timestamp<br>
+      ✅ Proyección exacta de tu liquidación<br>
+      ✅ Atención directa con un asesor jurídico<br><br>
+      <strong style="color:var(--gold)">🚀 Solo $200 MXN/mes (como $10 pesos al día)</strong><br><br>
+      <button class="btn-gold" style="margin-top:8px" onclick="toast('🔗 Enlace de pago: rjl.mx/suscribirse')">💳 Suscribirme ahora</button></div>`);
+    state.typing = false;
+    return;
+  }
+
+  await new Promise(r => setTimeout(r, 800));
+  removeTyping(chatId);
+  const reply = getMockResponse(txt, chatId);
+  addMsg(chatId, 'bot', fmt(reply));
+  state.typing = false;
+}
+
+// ==================== MOCK PARA ASESOR ====================
+async function analyzeLegalMock() {
+  const btn = document.querySelector('#legalCard .btn-outline');
+  const box = document.getElementById('legalAiBox');
+  const textEl = document.getElementById('legalAiText');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Analizando…';
+  box.style.display = 'block';
+  textEl.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:var(--text-dim)"><div class="spinner"></div> Revisando jurisprudencia...</div>';
+  
+  await new Promise(r => setTimeout(r, 1200));
+  
+  textEl.innerHTML = `<strong>🔍 Análisis Legal Completado</strong><br><br>
+  <strong>Régimen aplicable:</strong> LFT (sin contrato colectivo identificado).<br><br>
+  <strong>Jurisprudencia clave:</strong><br>
+  • <strong>Registro I. 5o. J/17</strong> (Décima Época): La falta de contrato escrito no impide acreditar relación laboral. La carga de la prueba se invierte a favor del trabajador.<br>
+  • <strong>Tesis 2a./J 132/2019</strong>: La falta de registro ante el IMSS genera presunción de relación laboral y obliga al patrón a demostrar lo contrario.<br><br>
+  <strong>Estrategia:</strong> Proceder por la vía de LFT. El patrón tendrá que demostrar que NO existió relación laboral, lo cual es casi imposible con las 34 evidencias documentadas.`;
+  
+  btn.disabled = false;
+  btn.innerHTML = '🔄 Actualizar análisis legal';
+}
+
+async function analyzeCaseMock() {
+  const btn = document.querySelector('#projCard .btn-outline');
+  const textEl = document.getElementById('lawyerAnalysisText');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Analizando…';
+  textEl.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:var(--text-dim)"><div class="spinner"></div> La IA está analizando el expediente…</div>';
+  
+  await new Promise(r => setTimeout(r, 1300));
+  
+  textEl.innerHTML = `<strong>✅ FORTALEZAS DEL CASO</strong><br>
+  • 34 evidencias con GPS y timestamp<br>
+  • Salario actual $380/día documentado<br>
+  • Sin IMSS → reclamación adicional<br>
+  • Horas extra comprobadas<br><br>
+  <strong>⚠️ RIESGOS</strong><br>
+  • Aumento salarial reciente (podría ser cuestionado)<br>
+  • Falta de recibos del periodo inicial<br><br>
+  <strong>🎯 ESTRATEGIA RECOMENDADA</strong><br>
+  • Ir a CONCILIACIÓN primero con expediente completo<br>
+  • Rango realista de obtención: $45,000 - $57,000<br>
+  • Próximo paso: preparar escrito de conciliación esta semana`;
+  
+  btn.disabled = false;
+  btn.innerHTML = '🔄 Actualizar análisis';
+}
+
+function scrollToExpediente() {
+  document.getElementById('legalCard').scrollIntoView({ behavior: 'smooth' });
+  toast('Expediente de María González');
+}
+
+// ==================== UTILERÍAS ====================
+function toast(msg) {
+  const t = document.getElementById('toastEl');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function fakeUpload() {
+  closeEvModal();
+  toast('✅ Archivo guardado con sello de tiempo y GPS (lat: 19.4194, lon: -99.1456)');
+}
+
+function openEvModal() {
+  document.getElementById('evModal').classList.add('open');
+}
+
+function closeEvModal() {
+  document.getElementById('evModal').classList.remove('open');
+}
+
+document.getElementById('evModal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeEvModal();
+});
+</script>
+</body>
+</html>
